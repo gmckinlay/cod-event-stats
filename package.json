@@ -1,6 +1,8 @@
 {
-  "name": "mwstats",
-  "version": "0.0.0",
+  "name": "cod-event-stats",
+  "version": "1.0.0",
+  "author": "Graham McKinlay",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
