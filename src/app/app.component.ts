@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { interval } from 'rxjs';
 import { EventDto, TeamDto } from './models/api.models';
 import { MwstatsService } from './services/mwstats.service';
 
@@ -48,7 +49,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEvents();
+    interval(60000).subscribe(()=>this.getEvents());
   }
 
   getEvents(): void {
