@@ -90,7 +90,7 @@ export class AppComponent implements OnInit {
   }
 
   getEventMatches(event: EventDto): number {
-    const mIds: string[] = event.teams.flatMap((t)=>t.players.flatMap((p)=>p.matchIds));
+    const mIds: string[] = event.teams.flatMap((t)=>t.players.flatMap((p)=>p.wzMatches)).map((m)=>m.matchID);
     return mIds.filter((n, i) => mIds.indexOf(n) === i).length;
   }
 
