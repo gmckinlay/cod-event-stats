@@ -49,12 +49,12 @@ export class AppComponent implements OnInit {
     ];
 
     this.columnDefs1 = [      
-      { field: 'matchId', headerName: 'Match', width:100},
+      { field: 'matchId', headerName: 'Match', minWidth:100},
       { field: 'mode', headerName: 'Mode', width:100 },
-      { field: 'position', headerName: 'Pos', width:100 },
-      { field: 'startTime', headerName: 'Time', valueFormatter: getTime },
+      { field: 'position', headerName: 'Pos', width:60 },
+      { field: 'startTime', headerName: 'Time', width:175, valueFormatter: getTime },
       { field: 'team', headerName: 'Team', width:150  },
-      { field: 'totalKills', headerName: 'Kills', width:100 },
+      { field: 'totalKills', headerName: 'Kills', width:75 },
       { field: 'totalDeaths', headerName: 'Deaths', width:100 }
     ];
   }
