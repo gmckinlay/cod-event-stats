@@ -19,7 +19,7 @@ interface PlayerDto {
     totalWins: number;
     matches: number;
     kd: number;
-    matchIds: string[];
+    wzMatches: any[];
 }
 
 export interface Friends {
