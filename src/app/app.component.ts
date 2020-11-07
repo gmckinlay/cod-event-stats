@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   title = 'mwstats';
   events: EventDto[];
   columnDefs;
+  columnDefs1;
 
   gridOptions: GridOptions = {
     defaultColDef: {
@@ -37,19 +38,30 @@ export class AppComponent implements OnInit {
   constructor(private modalService: BsModalService, private mwstats: MwstatsService){
     this.columnDefs = [
       { field: 'uno', headerName: 'Acti ID', minWidth:150, valueFormatter: getUsername },
-      { field: 'totalKills', headerName: 'Kills' },
-      { field: 'totalDeaths', headerName: 'Deaths' },
-      { field: 'totalDmg', headerName: 'Dmg' },
-      { field: 'totalDmgTkn', headerName: 'Dmg Tkn' },
-      { field: 'bestPosition', headerName: 'Best Pos' },
-      { field: 'totalWins', headerName: 'Wins' },
-      { field: 'matches', headerName: 'Matches' },
-      { field: 'kd', headerName: 'K/D' }
+      { field: 'totalKills', headerName: 'Kills', width:100  },
+      { field: 'totalDeaths', headerName: 'Deaths', width:100  },
+      { field: 'totalDmg', headerName: 'Dmg', width:100 },
+      { field: 'totalDmgTkn', headerName: 'Dmg Tkn', width:100 },
+      { field: 'bestPosition', headerName: 'Best Pos', width:100 },
+      { field: 'totalWins', headerName: 'Wins', width:100 },
+      { field: 'matches', headerName: 'Matches', width:100 },
+      { field: 'kd', headerName: 'K/D', width:100 }
+    ];
+
+    this.columnDefs1 = [      
+      { field: 'matchId', headerName: 'Match', width:100},
+      { field: 'mode', headerName: 'Mode', width:100 },
+      { field: 'position', headerName: 'Pos', width:100 },
+      { field: 'startTime', headerName: 'Time', valueFormatter: getTime },
+      { field: 'team', headerName: 'Team', width:150  },
+      { field: 'totalKills', headerName: 'Kills', width:100 },
+      { field: 'totalDeaths', headerName: 'Deaths', width:100 }
     ];
   }
 
   ngOnInit(): void {
-    interval(60000).subscribe(()=>this.getEvents());
+    this.getEvents();
+    interval(5 * 60 * 1000).subscribe(()=>this.getEvents());
   }
 
   getEvents(): void {
@@ -101,3 +113,4 @@ export class AppComponent implements OnInit {
 }
 
 var getUsername = function (params){return  params.value.split('#')[0]};
+var getTime = function (params){return  new Date(params.value*1000).toLocaleString()};
