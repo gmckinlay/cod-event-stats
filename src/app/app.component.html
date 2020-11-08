@@ -66,16 +66,25 @@
           </div>
         </div>
       </div>
-      <div class="row ag-theme-alpine">
-        <div *ngFor="let team of event.teams" [ngClass]="{'col-md-12': event.teams.length === 1, 'col-md-6': event.teams.length > 1}" style="padding-bottom: 15px; padding-top: 15px;">        
-          <ag-grid-angular class="col-md-10"
-            style="height: 520px;"
+      <div class="row col-md-12" *ngFor="let team of event.teams" style="padding-bottom: 15px; padding-top: 15px;">       
+        <div class="col-md-6">
+          <ag-grid-angular
+            style="height: 300px;"
             class="ag-theme-alpine-dark"
             [rowData]="team.players"
             [columnDefs]="columnDefs"
             [gridOptions]="gridOptions">        
           </ag-grid-angular>
         </div>
+        <div class="col-md-6">
+          <ag-grid-angular
+            style="height: 300px;"
+            class="ag-theme-alpine-dark"
+            [rowData]="team.matches"
+            [columnDefs]="columnDefs1"
+            [gridOptions]="gridOptions1">        
+          </ag-grid-angular>
+        </div>        
       </div>
     </div>
   </div>
