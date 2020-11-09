@@ -1,9 +1,10 @@
 <div class="container col-md 12">
   <button type="button" class="btn btn-primary" (click)=openModal(template)>Add Event</button>
+  <button type="button" class="btn btn-primary" (click)=addTestEvent()>Add Test Event</button>
   
   <div class="row col-md-12 mt-2">
     <div style="padding-bottom: 15px;" class="col-md-12" *ngFor="let event of events">
-      <div class="row">
+      <div class="row" style="padding-bottom: 15px;">
         <div class="col-md-12">
           <div class="card-deck">
             <div class="card card-body bg-dark">              
@@ -62,30 +63,75 @@
               <div class="card-body d-flex align-items-center">
                 <h5 class="card-title text-center col-md-12">{{getEventMatches(event)}}</h5>        
               </div>  
-            </div> 
+            </div>         
           </div>
         </div>
       </div>
-      <div class="row col-md-12" *ngFor="let team of event.teams" style="padding-bottom: 15px; padding-top: 15px;">       
-        <div class="col-md-6">
-          <ag-grid-angular
-            style="height: 300px;"
-            class="ag-theme-alpine-dark"
-            [rowData]="team.players"
-            [columnDefs]="columnDefs"
-            [gridOptions]="gridOptions">        
+      <tabset>
+        <tab heading="Leaderboard" #leaderboardTab="tab">
+          <div class="row col-md-12" style="padding-bottom: 15px; padding-top: 15px;">  
+            <div class="col-md-12">
+              <ag-grid-angular *ngIf="leaderboardTab.active"
+                  style="height: 500px;"
+                  class="ag-theme-alpine-dark"
+                  [rowData]="event.teams"
+                  [columnDefs]="columnDefs2"
+                  [gridOptions]="gridOptions">        
+                </ag-grid-angular>
+            </div>
+          </div>
+        </tab>
+        <tab heading="Teams" #teamTab="tab">          
+          <div class="row col-md-12" *ngFor="let team of event.teams" style="padding-bottom: 15px; padding-top: 15px;">   
+            <h4 class="col-md-12">{{team.name}}</h4>    
+            <div class="col-md-8" *ngIf="teamTab.active" >
+              <ag-grid-angular
+                style="height: 300px;"
+                class="ag-theme-alpine-dark"
+                [rowData]="team.players"
+                [columnDefs]="columnDefs"
+                [gridOptions]="gridOptions">        
+              </ag-grid-angular>
+            </div>
+            <div class="col-md-4" *ngIf="teamTab.active" >
+              <ag-grid-angular
+                style="height: 300px;"
+                class="ag-theme-alpine-dark"
+                [rowData]="team.matches"
+                [columnDefs]="columnDefs1"
+                [gridOptions]="gridOptions">        
+              </ag-grid-angular>
+            </div>        
+          </div>
+        </tab>
+        <tab heading="Games" #gamesTab="tab">
+          <div class="row">
+            <div class="col-md-6" *ngFor="let game of event.games; let i = index" style="padding-bottom: 15px; padding-top: 15px;">                     
+              <div class="col-md-12" >              
+                <h4>Game {{i + 1}}</h4>
+                <ag-grid-angular
+                  style="height: 400px;"
+                  class="ag-theme-alpine-dark"
+                  [rowData]="game"
+                  [columnDefs]="columnDefs3"
+                  [gridOptions]="gridOptions">        
+                </ag-grid-angular>                
+              </div>
+            </div>
+          </div>         
+        </tab>
+        <tab heading="Players" #playerTab="tab">
+          <ag-grid-angular *ngIf="playerTab.active"
+                style="height: 800px;"
+                class="ag-theme-alpine-dark"
+                [rowData]="getEventPlayers(event)"
+                [columnDefs]="columnDefs"
+                [gridOptions]="gridOptions">        
           </ag-grid-angular>
-        </div>
-        <div class="col-md-6">
-          <ag-grid-angular
-            style="height: 300px;"
-            class="ag-theme-alpine-dark"
-            [rowData]="team.matches"
-            [columnDefs]="columnDefs1"
-            [gridOptions]="gridOptions1">        
-          </ag-grid-angular>
-        </div>        
-      </div>
+        </tab>
+      </tabset>
+      
+      
     </div>
   </div>
 </div>

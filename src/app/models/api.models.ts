@@ -1,12 +1,14 @@
 export interface EventDto {
     name: string;
     date: number;
-    teams: TeamDto[];    
+    teams: TeamDto[];   
+    games: {team:TeamDto, match: MatchDto}[][] ;
 }
 
 export interface TeamDto {
     name: string;
-    players: PlayerDto[]   
+    players: PlayerDto[];
+    matches: MatchDto[];
 }
 
 interface PlayerDto {
@@ -20,6 +22,16 @@ interface PlayerDto {
     matches: number;
     kd: number;
     wzMatches: any[];
+}
+
+interface MatchDto {
+    matchId: string;
+    mode: string;
+    position: number;
+    starTime: number;
+    team: string;
+    totalDeaths: number;
+    totalKills: number;
 }
 
 export interface Friends {
