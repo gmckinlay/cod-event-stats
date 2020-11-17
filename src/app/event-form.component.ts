@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { EventDto } from './models/api.models';
 import { MwstatsService } from './services/mwstats.service';
+import {faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-event-form',
@@ -24,13 +25,28 @@ import { MwstatsService } from './services/mwstats.service';
         </div>
         <div class="form-group" *ngFor="let team of teams.controls; index as i">
             <div class="form-group col-md-11 offset-md-1">
-                <input class="form-control" [formControl]="team.controls.name" placeholder="Team Name" />
+                <div class="input-group mb-3">
+                    <input class="form-control" [formControl]="team.controls.name" placeholder="Team Name" />
+                    <div class="input-group-append">
+                        <button (click)="removeTeam(i)" class="btn btn-sm btn-primary btn-outline-secondary">
+                            <fa-icon [icon]="faTrash"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+                
             </div>
             <div class="form-group" *ngFor="let player of team.controls.players.controls; index as j">
-                <input class="form-control col-md-10 offset-md-2" placeholder="Activistion ID"
-                    [formControl]="player.controls.uno"
-                    [typeahead]="players"
-                    [isAnimated]="true"/>
+                <div class="input-group mb-3">
+                    <input class="form-control col-md-10 offset-md-2" placeholder="Activistion ID"
+                        [formControl]="player.controls.uno"
+                        [typeahead]="players"
+                        [isAnimated]="true"/>
+                    <div class="input-group-append">
+                        <button (click)="removePlayer(i, j)" class="btn btn-sm btn-primary btn-outline-secondary">
+                            <fa-icon [icon]="faTrash"></fa-icon>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-11 offset-md-1">
                 <button type="button" class="btn btn-primary" (click)="addPlayer(i)">Add Player</button>
@@ -55,6 +71,8 @@ export class EventFormComponent implements OnInit {
     players: string[];
     date = new FormControl('');
     time = new FormControl('');
+
+    faTrash = faTrash;
 
     constructor(private mwStatsService: MwstatsService){}
 
@@ -81,6 +99,14 @@ export class EventFormComponent implements OnInit {
 
     addPlayer(i: number){
         (<FormArray>(<FormGroup>this.teams.controls[i]).controls.players).push(new FormGroup({uno:new FormControl('')}));
+    }
+
+    removePlayer(i: number, j: number){
+        (<FormArray>(<FormGroup>this.teams.controls[i]).controls.players).removeAt(j);
+    }
+
+    removeTeam(i: number){
+        this.teams.removeAt(i);
     }
 
     // TODO: Remove this when we're done
